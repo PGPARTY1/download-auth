@@ -1,0 +1,19 @@
+[package]
+name = "pookiestudios-desktop"
+version = "1.0.0"
+description = "PookieStudios Windows desktop app"
+authors = ["PookieStudios"]
+license = "MIT"
+repository = ""
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+tauri = { version = "1.6", features = ["shell-open"] }
+
+[features]
+custom-protocol = ["tauri/custom-protocol"]

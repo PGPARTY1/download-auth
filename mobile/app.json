@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "PookieStudios",
+    "slug": "pookiestudios-mobile",
+    "scheme": "pookiestudios",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.pookiestudios.app",
+      "usesAppleSignIn": true
+    },
+    "android": {
+      "package": "com.pookiestudios.app"
+    },
+    "plugins": [
+      "@stripe/stripe-react-native",
+      "expo-apple-authentication"
+    ],
+    "extra": {
+      "apiBaseUrl": "http://10.0.2.2:4100"
+    }
+  }
+}
