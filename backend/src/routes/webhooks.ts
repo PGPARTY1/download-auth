@@ -35,7 +35,7 @@ webhooksRouter.post("/stripe", async (request, response) => {
           await prisma.purchase.upsert({
             where: { stripePaymentIntentId: paymentIntent.id },
             update: {
-              status: "succeeded",
+              status: "completed",
               amountCents: paymentIntent.amount,
               currency: paymentIntent.currency,
               platform
@@ -43,7 +43,7 @@ webhooksRouter.post("/stripe", async (request, response) => {
             create: {
               userId,
               productId,
-              status: "succeeded",
+              status: "completed",
               amountCents: paymentIntent.amount,
               currency: paymentIntent.currency,
               platform,
@@ -98,7 +98,7 @@ webhooksRouter.post("/stripe", async (request, response) => {
           await prisma.purchase.upsert({
             where: { stripeCheckoutId: checkout.id },
             update: {
-              status: "succeeded",
+              status: "completed",
               amountCents: totalAmount,
               currency,
               platform,
@@ -107,7 +107,7 @@ webhooksRouter.post("/stripe", async (request, response) => {
             create: {
               userId,
               productId,
-              status: "succeeded",
+              status: "completed",
               amountCents: totalAmount,
               currency,
               platform,

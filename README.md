@@ -49,6 +49,16 @@ npx prisma db seed
 npm run dev
 ```
 
+### Local Windows quick start (no manual PostgreSQL setup)
+
+If Docker Desktop is installed:
+
+```bash
+npm run db:start
+npm run db:init
+npm run dev:backend
+```
+
 ### 2) Mobile
 
 ```bash

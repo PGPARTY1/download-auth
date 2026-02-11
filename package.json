@@ -10,6 +10,10 @@
     "dev:backend": "npm --prefix backend run dev",
     "dev:mobile": "npm --prefix mobile run start",
     "dev:windows": "npm --prefix windows run dev",
+    "db:start": "npm --prefix backend run db:start",
+    "db:stop": "npm --prefix backend run db:stop",
+    "db:reset": "npm --prefix backend run db:reset",
+    "db:init": "npm --prefix backend run db:init",
     "typecheck:backend": "npm --prefix backend run typecheck",
     "typecheck:mobile": "npm --prefix mobile run typecheck",
     "typecheck:windows": "npm --prefix windows run typecheck"

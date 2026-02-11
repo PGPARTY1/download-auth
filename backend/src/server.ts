@@ -25,6 +25,8 @@ app.use(httpLogger);
 // Stripe signature verification requires raw body.
 app.use("/webhooks", express.raw({ type: "application/json" }), webhooksRouter);
 app.use("/api/webhooks", express.raw({ type: "application/json" }), webhooksRouter);
+app.use("/payments/webhooks", express.raw({ type: "application/json" }), webhooksRouter);
+app.use("/api/payments/webhooks", express.raw({ type: "application/json" }), webhooksRouter);
 app.use(express.json({ limit: "1mb" }));
 
 app.use("/health", healthRouter);
@@ -39,12 +41,34 @@ app.use("/api/payments", paymentsRouter);
 app.use(notFound);
 app.use(errorHandler);
 
-const server = app.listen(env.PORT, () => {
-  logger.info(`PookieStudios API running on http://localhost:${env.PORT}`);
-});
+let server: ReturnType<typeof app.listen> | null = null;
+
+async function start() {
+  try {
+    await prisma.$connect();
+    logger.info("Database connection established.");
+  } catch (error) {
+    logger.error(
+      {
+        error
+      },
+      "Failed to connect to database. Run `npm --prefix backend run db:start` then `npm --prefix backend run db:init`, or set DATABASE_URL."
+    );
+    process.exit(1);
+  }
+
+  server = app.listen(env.PORT, () => {
+    logger.info(`PookieStudios API running on http://localhost:${env.PORT}`);
+  });
+}
 
 async function shutdown() {
   logger.info("Shutting down API");
+  if (!server) {
+    await prisma.$disconnect();
+    process.exit(0);
+    return;
+  }
   server.close(async () => {
     await prisma.$disconnect();
     process.exit(0);
@@ -53,3 +77,5 @@ async function shutdown() {
 
 process.on("SIGINT", shutdown);
 process.on("SIGTERM", shutdown);
+
+void start();
